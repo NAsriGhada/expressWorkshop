@@ -24,6 +24,7 @@ const authMiddleware = (req, res, next) => {
   if (name && email && password) {
     // Pass name to the home view using app.locals
     app.locals.name = name;
+    app.locals.email = email;
     console.log(`Setting app.locals.name to ${name}`);
     next();
   } else {
@@ -39,7 +40,8 @@ app.post("/login", authMiddleware, (req, res) => {
 // Route to display home page
 app.get("/home", (req, res) => {
   const name = app.locals.name;
-  res.render("home.ejs", { name: name });
+  const email = app.locals.email;
+  res.render("home.ejs", { name: name, email: email });
 });
 
 app.listen(port, () => {
